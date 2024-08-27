@@ -22,14 +22,14 @@ from urllib.parse import quote
 KeyZHZ = 'KeyZHZ.txt'
 
 # Chú thích ký tự
-mo_ngoac_1 = "\033[1m["
-mo_ngoac = "\033[1m[\x1b[1;38;2;173;255;47m"  # dấu [ xanh chuối
+mo_ngoac_1 = "\033[0m\033[1m["
+mo_ngoac = "\033[0m\033[1m[\x1b[1;38;2;173;255;47m"  # dấu [ xanh chuối
 dong_ngoac = "\033[0m\033[1m]"  # dấu ]
 mo_ngoac_do = "\033[0m\033[1m[\033[1;31m"   # dấu [ màu đỏ
 mo_ngoac_xl = "\033[0m\033[1m[\033[1;32m"  # dấu [ xanh lá
 mo_ngoac_cam = "\033[0m\033[1m[\x1b[1;38;2;255;165;0m"  # dấu [ cam
 mo_ngoac_xd = "\033[0m\033[1m[\x1b[1;38;2;135;206;250m"  # dấu [ xanh dương
-mo_ngoac_hong = "\033[0m\033[1m[\x1b[1;38;2;255;182;193m"  # dấu [ hồng
+mo_ngoac_hong = "\033[0m\033[1m[\x1b[1;38;2;255;182;193;0m"  # dấu [ hồng
 
 # Màu
 xanhchuoi = "\x1b[1;38;2;173;255;47m"  # xanh chuối
