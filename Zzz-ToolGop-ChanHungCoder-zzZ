@@ -1,0 +1,436 @@
+# /c/159a1735-491a-41fc-adf0-9f144795a2f1
+thuvien = ['os', 'threading', 'requests', 'json', 'time', 'random', 'smtplib', 'threading']
+
+for lib in thuvien:
+    try:
+        __import__(lib)
+    except ImportError:        
+        pass
+        os.system(f"pip install {lib}")
+
+import os
+import sys
+import random
+import requests
+import json
+import time
+from time import sleep
+from datetime import datetime, timedelta
+from pytz import timezone
+from urllib.parse import quote
+
+KeyZHZ = 'KeyZHZ.txt'
+
+# Chú thích ký tự
+mo_ngoac_1 = "\033[1m["
+mo_ngoac = "\033[1m[\x1b[1;38;2;173;255;47m"  # dấu [ xanh chuối
+dong_ngoac = "\033[0m\033[1m]"  # dấu ]
+mo_ngoac_do = "\033[0m\033[1m[\033[1;31m"   # dấu [ màu đỏ
+mo_ngoac_xl = "\033[0m\033[1m[\033[1;32m"  # dấu [ xanh lá
+mo_ngoac_cam = "\033[0m\033[1m[\x1b[1;38;2;255;165;0m"  # dấu [ cam
+mo_ngoac_xd = "\033[0m\033[1m[\x1b[1;38;2;135;206;250m"  # dấu [ xanh dương
+mo_ngoac_hong = "\033[0m\033[1m[\x1b[1;38;2;255;182;193m"  # dấu [ hồng
+
+# Màu
+xanhchuoi = "\x1b[1;38;2;173;255;47m"  # xanh chuối
+xanhla = "\033[1;32m"  # xanh lá
+do = "\033[1;31m"  # đỏ
+trang = "\x1b[1;38;2;233;233;233m"  # trắng đậm
+resetmau = "\033[0m\33[1m"  # đặt lại màu
+xanhduong = "\x1b[1;38;2;135;206;250m"  # xanh d nhạt
+hong = "\x1b[1;38;2;255;182;193m"  # hồng nhạt
+cam = "\x1b[1;38;2;255;165;0m"  # cam
+
+# Thanh gạch
+que = ''.join(['─'] * 50)
+thanh = f"{xanhduong}{que}{resetmau}"
+gach = ''.join(['═'] * 20)
+# Thông tin
+ip = requests.get('https://api.ipify.org').text
+url_api = 'https://apitool.zhz.icu/'
+sd = f'{mo_ngoac_hong}+{dong_ngoac} Bạn Đang Sử Dụng: '
+fb = 'https://facebook.com/dchanhung'
+tele = 'ChanHungCoder'
+token = '7463700374:AAG3vc3spAwBtt5CjWvryruZrPjvnxK4VYA'
+chatid = '7456417993'
+# Danh Sách Tool
+tool1 = 'Tool TraoDoiSub TikTok Siêu Job'
+tool2 = f'Tool Share Ảo - Profile {mo_ngoac_cam}Đa Luồng{dong_ngoac}'
+tool21 = f'Tool Share Ảo - Page Profile {mo_ngoac_cam}Đa Luồng{dong_ngoac}'
+tool22 = f'Tool Get 16 Loại Token Facebook {mo_ngoac_cam}Đa Luồng{dong_ngoac}'     
+tool23 = f'Tool Reg Facebook Auto 282 {mo_ngoac_xd}Private{dong_ngoac}'
+tool3 = 'Tool Spam Ngl.Link'
+tool31 = f'Tool Spam SMS - 40 API {mo_ngoac_cam}50 Luồng{dong_ngoac}'        
+tool32 = 'Tool Spam Reg User ShopClone6 Cmsnt.Net'
+tool33 = f'Tool Spam Gmail {mo_ngoac_cam}Đa Luồng{dong_ngoac}'
+tool4 = 'Tool Buff TikTok Zefoy'      
+tool41 = 'Tool Đổi Username TikTok'
+tool5 = f'Tool Encode Python {mo_ngoac_1}{hong}V1{dong_ngoac}'    
+tool51 = f'Tool Encode Python {mo_ngoac_1}{hong}V2{dong_ngoac}'    
+tool6 = 'Tool Tải Theme Website'      
+
+# Hàm để đọc key từ file và xem hsd
+def xem_key_tu_file():
+    if os.path.exists(KeyZHZ):
+        with open(KeyZHZ, 'r') as f:
+            key_trong_file = f.read().strip()
+            kiemtrakey = 'https://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/xemkey.php'
+            thongtinkey = requests.get(kiemtrakey).json()
+            for k in thongtinkey:
+                if k['key'] == key_trong_file:
+                    return k['hsd']
+    return None
+# Hàm để lấy hạn sử dụng
+# Banner
+hsd_key = xem_key_tu_file()
+if hsd_key is None:
+    hsd_key = "Khởi Động Lại Tool Để Cập Nhật!"
+banner = f"""{trang}Tool ZHZ Tổng Hợp
+Copyright By ChanHungCoder
+Nhận Code Tool Python Theo Yêu Cầu
+Hỗ Trợ - Mua Key Vip Liên Hệ Thông Tin Phía Dưới
+{thanh}
+Facebook: {fb}
+Tele: {tele}
+{thanh}
+IP: {ip}
+HSD Key: {hsd_key}"""
+
+banner_key = f"""{trang}Tool ZHZ Tổng Hợp
+Copyright By ChanHungCoder
+Nhận Code Tool Python Theo Yêu Cầu
+Hỗ Trợ - Mua Key Vip Liên Hệ Thông Tin Phía Dưới
+{thanh}
+Facebook: {fb}
+Tele: {tele}
+{thanh}
+IP: {ip}
+{mo_ngoac_do}!{dong_ngoac}{trang} Lưu Ý: Mỗi IP Chỉ Được Dùng 1 Key"""
+os.system("cls" if os.name == "nt" else "clear")
+sleep(1)
+
+# Hàm hiển thị delay
+def print_slow(text, delay=1):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print() 
+
+# Hàm để lưu key vào file
+def luu_key(key):
+    with open(KeyZHZ, 'w') as f:
+        f.write(key)
+
+# Hàm để đọc key từ file
+def doc_key_tu_file():
+    if os.path.exists(KeyZHZ):
+        with open(KeyZHZ, 'r') as f:
+            return f.read().strip()
+    return None
+
+# Hàm để xóa file key
+def xoa_file_key():
+    if os.path.exists(KeyZHZ):
+        os.remove(KeyZHZ)
+
+def guithongbao(note, token=token, chatid=chatid):
+    url = f'https://api.telegram.org/bot{token}/sendMessage?chat_id={chatid}&text={quote(note)}&parse_mode=MarkdownV2'
+# MarkdownV2
+    response = requests.get(url)  
+    if response.status_code == 200:
+        pass
+#        print("Thông báo đã được gửi thành công!")
+    else:
+         pass
+#        print("Gửi thông báo thất bại!")
+
+now = datetime.now(timezone('Asia/Ho_Chi_Minh'))
+kytukey = "1234567890"
+random_tong = 10
+random_key = ''.join(random.choices(kytukey, k=random_tong))
+key = 'ChanHungCoder_KeyFree_' + random_key
+hsd = (now + timedelta(days=1)).strftime('%H:%M:%S %d-%m-%Y')
+
+key_trong_file = doc_key_tu_file()
+
+if key_trong_file:
+    kiemtrakey = f'https://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/xemkey.php'
+    thongtinkey = requests.get(kiemtrakey).json()
+    key_hop_le = False
+    for k in thongtinkey:
+        if k['key'] == key_trong_file:
+            hsd_key = datetime.strptime(k['hsd'], '%H:%M:%S %d-%m-%Y').replace(tzinfo=timezone('Asia/Ho_Chi_Minh'))
+            if hsd_key > now and k['ip'] == ip:
+                print_slow(f"{thanh}", delay=0.005)
+                print_slow(f"{mo_ngoac}✓{dong_ngoac}{trang} Key Đúng. Đang Vào Tool!", delay=0.01)
+                print_slow(f"{thanh}", delay=0.005)
+                sleep(1)
+                now = datetime.now(timezone('Asia/Ho_Chi_Minh'))                     
+                time_day = now.strftime('%H:%M:%S %d-%m-%Y')
+                hsd_key = xem_key_tu_file()                
+                guithongbao(f">Thông Báo Đăng Nhập Tool ❗\n>Thời Gian: `{time_day}`\n>Key: `{key_trong_file}`\n>HSD: `{hsd_key}`\n>IP: `{ip}`")
+                key_hop_le = True
+                break
+            else:
+                xoa_file_key()
+                if hsd_key <= now:
+                    print_slow(f"{thanh}", delay=0.005)
+                    print_slow(f"{mo_ngoac_do}!{dong_ngoac}{trang} Key Đã Hết Hạn. Vui Lòng Vượt Link Lại!", delay=0.01)
+                    print_slow(f"{thanh}", delay=0.005)
+                else:
+                    xoa_file_key()
+                    print_slow(f"{thanh}", delay=0.005)
+                    print_slow(f"{mo_ngoac_do}!{dong_ngoac}{trang} IP Không Hợp Lệ. Vui Lòng Khởi Động Lại Tool!", delay=0.01)
+                    print_slow(f"{thanh}", delay=0.005)                     
+                    sleep(1)
+                sys.exit()
+    if not key_hop_le:
+        print_slow(f"{thanh}", delay=0.005)
+        print_slow(f"{mo_ngoac_do}!{dong_ngoac}{trang} Key Hiện Tại Không Hợp Lệ. Vui Lòng Lấy Key Mới!", delay=0.01)
+        print_slow(f"{thanh}", delay=0.005)
+        sleep(1)
+        os.system("cls" if os.name == "nt" else "clear")
+        key_trong_file = None
+
+if not key_trong_file:
+    link_luu_key = f'https://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/taokey.php?keyadmin=dchanhung_coder_14092007&key={key}&hsd={hsd}&ip={ip}'
+    requests.get(link_luu_key)
+    url = f'https://zhz.icu/VIPKEY/keyvip.php?key={key}'
+    token_yeumoney = '82f8e12dd5d0fd2328ee7a7777df3c1ed75500f88da23fde6b7d110dc02c1756'
+    yeumoney = requests.get(f'https://yeumoney.com/QL_api.php?token={token_yeumoney}&format=json&url={url}').json()
+
+    try:
+        if yeumoney['status'] == "error": 
+            print(yeumoney['message'])
+            quit()
+        else:
+            link_key = yeumoney['shortenedUrl']
+        print(banner_key)
+        print_slow(f"{thanh}", delay=0.01)
+        print(f"{mo_ngoac}*{dong_ngoac}{trang} Link Lấy Key: {xanhduong}{link_key}{resetmau}")   
+        now = datetime.now(timezone('Asia/Ho_Chi_Minh')) 
+        time_day = now.strftime('%H:%M:%S %d-%m-%Y')
+        guithongbao(f">Thông Báo Tạo Link Lấy Key❗\n>Thời Gian: `{time_day}`\n>Link: `{link_key}`\n>Key: `{key}`\n>IP: `{ip}`")
+        os.system(f'termux-open-url {link_key}')
+        while True:
+            keynhap = input(f'{mo_ngoac}*{dong_ngoac}{trang} Key Đã Vượt Hoặc Key Vip: {resetmau}')
+            if not keynhap.strip():
+                print_slow(f"{thanh}", delay=0.01)
+                print(f"{mo_ngoac_do}!{dong_ngoac}{trang} Bạn Chưa Nhập Key. Vui Lòng Nhập Key Để Tiếp Tục!")
+                continue           
+            print_slow(f"{thanh}", delay=0.01)
+            print(f'{mo_ngoac}*{dong_ngoac}{trang} Đang Check Key...')
+            sleep(2)
+            kiemtrakey = f'http://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/xemkey.php'
+            thongtinkey = requests.get(kiemtrakey).json()
+            key_hop_le = False
+            for k in thongtinkey:
+                if k['key'] == keynhap:
+                    hsd_key = datetime.strptime(k['hsd'], '%H:%M:%S %d-%m-%Y').replace(tzinfo=timezone('Asia/Ho_Chi_Minh'))
+                    if hsd_key > now and k['ip'] == ip:
+                        print_slow(f"{thanh}", delay=0.01)
+                        print(f"{mo_ngoac}✓{dong_ngoac}{trang} Key Đúng. Đang Vào Tool!")
+                        now = datetime.now(timezone('Asia/Ho_Chi_Minh'))                                                             
+                        time_day = now.strftime('%H:%M:%S %d-%m-%Y')
+                        guithongbao(f">Thông Báo Kích Hoạt Key ❗\n>Thời Gian: `{time_day}`\n>Key: `{key}`\n>HSD: `{hsd}`\n>IP: `{ip}`")                        
+                        luu_key(keynhap)
+                        key_hop_le = True
+                        sleep(2)
+                        break
+                    else:
+                        xoa_file_key()
+                        if hsd_key <= now:
+                            print_slow(f"{thanh}", delay=0.01)
+                            print(f"{mo_ngoac_do}!{dong_ngoac}{trang}Key Đã Hết Hạn. Vui Lòng Vượt Link Lại!")
+                            print_slow(f"{thanh}", delay=0.01)
+                        else:
+                            print(f"{mo_ngoac_do}!{dong_ngoac}{trang} IP Không Hợp Lệ. Vui Lòng Khởi Động Lại Tool!")
+                            print_slow(f"{thanh}", delay=0.01)
+                            sleep(2)
+                        sys.exit()
+            if not key_hop_le:
+                print_slow(f"{thanh}", delay=0.01)
+                print(f"{mo_ngoac_do}!{dong_ngoac}{trang} Key Sai. Vui Lòng Nhập Lại!")
+                continue
+            break
+    except KeyboardInterrupt:
+        print(f"{mo_ngoac}*{dong_ngoac}{trang} Hẹn Gặp Lại!{resetmau}")
+        sys.exit()
+
+try:
+    while True:
+        os.system("cls" if os.name == "nt" else "clear")
+        print(banner)
+        print_slow(f"{thanh}", delay=0.01)
+        print(f"{trang}╔{gach}╗\n"
+              f"║{xanhla}  Tool TraoDoiSub   {resetmau}║\n"
+              f"╚{gach}╝")
+        print(f"{mo_ngoac}1.0{dong_ngoac} {trang}{tool1}{resetmau}")
+        print(f"{trang}╔{gach}╗\n"
+              f"║{xanhla}   Tool Facebook    {resetmau}║\n"
+              f"╚{gach}╝")
+        print(f"{mo_ngoac}2.0{dong_ngoac} {trang}{tool2}{resetmau}")
+        print(f"{mo_ngoac}2.1{dong_ngoac} {trang}{tool21}{resetmau}")
+        print(f"{mo_ngoac}2.2{dong_ngoac} {trang}{tool22}{resetmau}")
+        print(f"{mo_ngoac}2.3{dong_ngoac} {trang}{tool23}{resetmau}")        
+        print(f"{trang}╔{gach}╗\n"
+              f"║{xanhla}     Tool Spam      {resetmau}║\n"
+              f"╚{gach}╝")
+        print(f"{mo_ngoac}3.0{dong_ngoac} {trang}{tool3}{resetmau}")
+        print(f"{mo_ngoac}3.1{dong_ngoac} {trang}{tool31}{resetmau}")
+        print(f"{mo_ngoac}3.2{dong_ngoac} {trang}{tool32}{resetmau}")
+        print(f"{mo_ngoac}3.3{dong_ngoac} {trang}{tool33}{resetmau}")
+        print(f"{trang}╔{gach}╗\n"
+              f"║{xanhla}    Tool TikTok     {resetmau}║\n"
+              f"╚{gach}╝")
+        print(f"{mo_ngoac}4.0{dong_ngoac} {trang}{tool4}{resetmau}")
+        print(f"{mo_ngoac}4.1{dong_ngoac} {trang}{tool41}{resetmau}")
+        print(f"{trang}╔{gach}╗\n"
+              f"║{xanhla}    Tool Encode     {resetmau}║\n"
+              f"╚{gach}╝")
+        print(f"{mo_ngoac}5.0{dong_ngoac} {trang}{tool5}{resetmau}")
+        print(f"{mo_ngoac}5.1{dong_ngoac} {trang}{tool51}{resetmau}")
+        print(f"{trang}╔{gach}╗\n"
+              f"║{xanhla}     Tool Scan      {resetmau}║\n"
+              f"╚{gach}╝")
+        print(f"{mo_ngoac}6.0{dong_ngoac} {trang}{tool6}{resetmau}")        
+        print_slow(f"{thanh}", delay=0.01)
+
+        while True:
+            chontool = input(f'{mo_ngoac}*{dong_ngoac}{trang} Nhập Lựa Chọn: {resetmau}')
+            if chontool.strip() == "":
+                print(f"{mo_ngoac_do}!{dong_ngoac}{trang} Bạn Chưa Nhập Lựa Chọn!{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)         
+                continue
+            try:
+                chon = float(chontool)
+            except ValueError:
+                print(f"{mo_ngoac_do}!{dong_ngoac}{trang} Lựa Chọn Không Hợp Lệ!{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                continue            
+            if chon == 1.0:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool1}") 
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/tds/tool-traodoisub-tiktok-vip-dchcoder-love').text)
+                break
+            elif chon == 2.0:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool2}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/fb/zhz-sharetool-vip-pro-kaka').text)
+                break
+            elif chon == 2.1:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool21}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/fb/shareao-page-zhz-tool-dch').text)
+                break
+            elif chon == 2.2:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool22}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/fb/tool-get-token-16-type-chanhungcoder-love').text)
+                break
+            elif chon == 2.3:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool23}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/fb/tool-auto-reg-facebook-282-dch').text)
+                break                
+            elif chon == 3.0:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool3}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/spam/tool-spam-ngl.link-love-vip').text)
+                break
+            elif chon == 3.1:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool31}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/spam/tool-spam-sms-40api-love-vip').text)
+                break
+            elif chon == 3.2:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool32}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/spam/tool-reg-user-shopclone6-dchcoder-vip').text)
+                break
+            elif chon == 3.3:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool33}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/spam/spam-mail-smtp-daluong-vip').text)
+                break
+            elif chon == 4.0:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool4}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/tiktok/tool-zefoy-tiktok-vip-dev-dch').text)
+                break
+            elif chon == 4.1:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool41}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/tiktok/tool-doi-username-tiktok-chanhungdev').text)
+                break
+            elif chon == 5.0:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool5}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/encode/zhz-encode-v1-python-vip-dch').text)
+                break
+            elif chon == 5.1:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool51}{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/encode/zhz-encode-v2-python-vip-dch').text)
+                break
+            elif chon == 6.0:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(banner)
+                print(f"{thanh}")
+                print(f"{sd}{xanhchuoi}{tool6}")   
+                print_slow(f"{thanh}", delay=0.01)
+                exec(requests.get(f'{url_api}/scan/tai-code-website-by-dchdev').text)
+                break               
+            else:
+                print(f"{mo_ngoac_do}!{dong_ngoac}{trang} Sai Lựa Chọn. Vui Lòng Nhập Lại!{resetmau}")
+                print_slow(f"{thanh}", delay=0.01)
+                continue
+
+except KeyboardInterrupt:
+    os.system("cls" if os.name == "nt" else "clear")
+    print(banner)
+    print_slow(f"{thanh}", delay=0.001)
+    print(f"{mo_ngoac}ChanHungCoder{dong_ngoac}{trang} Hẹn Gặp Lại!{resetmau}")
+except Exception as e:
+    print(f"{mo_ngoac_do}!{dong_ngoac} Đã Xảy Ra Lỗi: {str(e)}{resetmau}")
+    sys.exit()
