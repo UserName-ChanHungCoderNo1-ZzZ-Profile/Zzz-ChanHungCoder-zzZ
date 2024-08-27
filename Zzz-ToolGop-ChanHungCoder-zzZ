@@ -1,5 +1,5 @@
 # /c/159a1735-491a-41fc-adf0-9f144795a2f1
-thuvien = ['os', 'threading', 'requests', 'json', 'time', 'random', 'smtplib', 'threading']
+thuvien = ['os', 'threading', 'requests', 'json', 'time', 'random', 'smtplib', 'threading', 'pytz']
 
 for lib in thuvien:
     try:
