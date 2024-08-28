@@ -47,7 +47,8 @@ thanh = f"{xanhduong}{que}{resetmau}"
 gach = ''.join(['═'] * 20)
 # Thông tin
 ip = requests.get('https://api.ipify.org').text
-url_api = 'https://apitool.zhz.icu/'
+url_api = 'https://apitool.zhz.icu/ChanHungCoder_VIPTool'
+keyadmin = 'dchanhung_coder_14092007'
 sd = f'{mo_ngoac_hong}+{dong_ngoac} Bạn Đang Sử Dụng: '
 fb = 'https://facebook.com/dchanhung'
 tele = 'ChanHungCoder'
@@ -74,7 +75,7 @@ def xem_key_tu_file():
     if os.path.exists(KeyZHZ):
         with open(KeyZHZ, 'r') as f:
             key_trong_file = f.read().strip()
-            kiemtrakey = 'https://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/xemkey.php'
+            kiemtrakey = f'{url_api}/KEY-TOOL-ZHZ-LOVE/xemkey.php'
             thongtinkey = requests.get(kiemtrakey).json()
             for k in thongtinkey:
                 if k['key'] == key_trong_file:
@@ -155,7 +156,7 @@ hsd = (now + timedelta(days=1)).strftime('%H:%M:%S %d-%m-%Y')
 key_trong_file = doc_key_tu_file()
 
 if key_trong_file:
-    kiemtrakey = f'https://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/xemkey.php'
+    kiemtrakey = f'{url_api}/KEY-TOOL-ZHZ-LOVE/xemkey.php'
     thongtinkey = requests.get(kiemtrakey).json()
     key_hop_le = False
     for k in thongtinkey:
@@ -194,7 +195,7 @@ if key_trong_file:
         key_trong_file = None
 
 if not key_trong_file:
-    link_luu_key = f'https://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/taokey.php?keyadmin=dchanhung_coder_14092007&key={key}&hsd={hsd}&ip={ip}'
+    link_luu_key = f'{url_api}/KEY-TOOL-ZHZ-LOVE/taokey.php?keyadmin={keyadmin}&key={key}&hsd={hsd}&ip={ip}'
     requests.get(link_luu_key)
     url = f'https://zhz.icu/VIPKEY/keyvip.php?key={key}'
     token_yeumoney = '82f8e12dd5d0fd2328ee7a7777df3c1ed75500f88da23fde6b7d110dc02c1756'
@@ -222,7 +223,7 @@ if not key_trong_file:
             print_slow(f"{thanh}", delay=0.01)
             print(f'{mo_ngoac}*{dong_ngoac}{trang} Đang Check Key...')
             sleep(2)
-            kiemtrakey = f'http://apitool.zhz.icu/KEY-TOOL-ZHZ-LOVE/xemkey.php'
+            kiemtrakey = f'{url_api}/KEY-TOOL-ZHZ-LOVE/xemkey.php'
             thongtinkey = requests.get(kiemtrakey).json()
             key_hop_le = False
             for k in thongtinkey:
