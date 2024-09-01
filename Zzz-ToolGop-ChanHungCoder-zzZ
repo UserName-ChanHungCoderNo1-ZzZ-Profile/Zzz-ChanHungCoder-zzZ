@@ -10,7 +10,7 @@ for lib in thuvien:
 import requests
 import os
 
-link = "https://www.mediafire.com/file/a2vsei01m6v4frp/toolgopzhzv1.2.py/file"
-print(f"Đang Chuyển Hướng Đến Link Tải Tool Update Mới!")    
+link = "https://www.mediafire.com/file/q3rlebbkvt96zqr/toolgopChanHungCoderUpdate.py/file"
+print(f"Link Tải Tool Update Mới!")    
 os.system(f'termux-open-url {link}')
 print(f"{link}")
